@@ -39,3 +39,13 @@ def save_user_key(chat_id, key):
 
     conn.commit()
     conn.close()
+
+
+# Функция для получения chat_id по ключу
+def get_chat_id_by_key(key):
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT chat_id FROM user_keys WHERE key = ?", (key,))
+    result = cursor.fetchone()
+    conn.close()
+    return result[0] if result else None

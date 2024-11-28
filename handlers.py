@@ -1,4 +1,4 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import CallbackContext
 import requests
 from db import get_user_key, save_user_key
@@ -58,11 +58,14 @@ async def button(update: Update, context: CallbackContext):
                                 f"ИНН: {inn}\n"
                                 f"Магазин: {shop_name}")
 
+                #web_app_url = f"https://wbdiscount.pro/{key}"
+                web_app_url = f"https://wbdiscount.pro"
+
                 keyboard = [
                     [InlineKeyboardButton("Баланс", callback_data='balance')],
                     [InlineKeyboardButton("Товары", callback_data='products')],
                     [InlineKeyboardButton("Объявления", callback_data='ads')],
-                    [InlineKeyboardButton("Перейти в профиль", url=f"{PROFILE_URL}")]
+                    [InlineKeyboardButton("Перейти в профиль", web_app=WebAppInfo(url=web_app_url))]
                 ]
                 reply_markup = InlineKeyboardMarkup(keyboard)
                 await query.edit_message_text(text=profile_info, reply_markup=reply_markup)
